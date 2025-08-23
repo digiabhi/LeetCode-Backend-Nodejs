@@ -1,31 +1,26 @@
-## Steps to setup the starter template
+# ProblemService
 
-1. Clone the project
+A Node.js backend service for managing Leetcode problems, built with TypeScript and Express.
 
-```
-git clone https://github.com/digiabhi/express-ts-boilerplate.git <ProjectName>
-```
+## Features
 
-2. Move in to the folder structure
+- RESTful API structure
+- Modular controllers, routers, and middlewares
+- Centralized error handling
+- MongoDB integration
+- Request validation
 
-```
-cd <ProjectName>
-```
+## Project Structure
 
-3. Install npm dependencies
+## Setup
 
-```
-npm i
-```
+1. Install dependencies:
+2. Configure environment variables in `src/config/index.ts`.
+3. Start the server:
 
-4. Create a new .env file in the root directory and add the `PORT` env variable
+## Scripts
 
-```
-echo PORT=8080 >> .env
-```
-
-5. Start the express server
-
-```
-npm run dev
-```
+- `npm run start` \- Start the server
+- `npm run dev` \- Start in development mode
+- `npm run build` \- Compile TypeScript
+- `npm run build` \- Compile TypeScript

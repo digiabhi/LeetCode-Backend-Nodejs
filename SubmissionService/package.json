@@ -1,7 +1,7 @@
 {
-  "name": "expresstypescripttemplate",
+  "name": "SubmissionService",
   "version": "1.0.0",
-  "description": "Basic node express typescript boilerplate for any ts project setup",
+  "description": "This is the submission service for LeetCode. This is responsible for receiving submissions from the frontend and storing them in a database.",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/server.ts",

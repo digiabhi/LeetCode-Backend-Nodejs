@@ -9,6 +9,7 @@ import {
 import { attachCorrelationIdMiddleware } from './middlewares/correlation.middleware';
 import logger from './config/logger.config';
 import {startWorkers} from "./workers/evaluation.worker";
+import {pullAllImages} from "./utils/containers/pullimage.utils";
 
 const app = express();
 
@@ -23,4 +24,7 @@ app.use(genericErrorHandler);
 app.listen(serverConfig.PORT, async () => {
   logger.info(`Server is running on http://localhost:${serverConfig.PORT}`);
   await startWorkers();
+  logger.info('Workers started successfully');
+  await pullAllImages();
+  logger.info('Images pulled');
 });

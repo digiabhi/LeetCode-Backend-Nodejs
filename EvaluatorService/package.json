@@ -1,7 +1,7 @@
 {
-  "name": "expresstypescripttemplate",
+  "name": "EvaluatorService",
   "version": "1.0.0",
-  "description": "Basic node express typescript boilerplate for any ts project setup",
+  "description": "Evaluator Service for LeetCode Backend. This service will evaluate the submissions and return the result.",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/server.ts",
@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^1.11.0",
     "bullmq": "^5.58.5",
+    "dockerode": "^4.0.7",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "ioredis": "^5.7.0",
@@ -22,6 +23,7 @@
     "zod": "^3.25.30"
   },
   "devDependencies": {
+    "@types/dockerode": "^3.3.43",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.21",
     "nodemon": "^3.1.10",

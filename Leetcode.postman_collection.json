@@ -1,0 +1,47 @@
+{
+	"info": {
+		"_postman_id": "13c5a0fd-568e-4601-9f73-803bb6890946",
+		"name": "Leetcode",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28452260"
+	},
+	"item": [
+		{
+			"name": "Problems",
+			"item": []
+		},
+		{
+			"name": "Submissions",
+			"item": []
+		},
+		{
+			"name": "Create Problem",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Two Sum\",\r\n  \"description\": \"Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\\n\\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\\n\\nYou can return the answer in any order.\",\r\n  \"difficulty\": \"Easy\",\r\n  \"testcases\": [\r\n    {\r\n      \"input\": \"nums = [2,7,11,15], target = 9\",\r\n      \"output\": \"[0,1]\"\r\n    },\r\n    {\r\n      \"input\": \"nums = [3,2,4], target = 6\",\r\n      \"output\": \"[1,2]\"\r\n    },\r\n    {\r\n      \"input\": \"nums = [3,3], target = 6\",\r\n      \"output\": \"[0,1]\"\r\n    }\r\n  ],\r\n  \"editorial\": \"Approach: We need to find two numbers in the array that sum to the target. A brute force method would check all pairs, but this takes O(n^2) time. A more efficient approach uses a hash map to store numbers and their indices while iterating over the array. For each element, check if target - current exists in the map. If yes, return indices. This solution works in O(n) time with O(n) space.\\n\\nSteps:\\n1. Initialize an empty hash map.\\n2. Iterate over each number in the array with its index.\\n3. For each number, compute complement = target - number.\\n4. If complement exists in the hash map, return its index and current index.\\n5. Otherwise, store the current number and its index in the hash map.\\n\\nComplexity:\\nTime: O(n)\\nSpace: O(n)\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/v1/problems",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"problems"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -55,7 +55,15 @@ const problemSchema = new mongoose.Schema<IProblem>({
     },
     testcases: [testCaseSchema]
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+        transform:(_, record) => {
+            delete (record as any).__v; // Remove the __v field
+            record.id = record._id; // Add id field with _id value
+            delete record._id; // Remove _id field
+            return record;
+        }
+    }
 });
 
 problemSchema.index({title: 1}, {unique: true});

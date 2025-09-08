@@ -1,5 +1,5 @@
 import {IProblem} from "../models/problems.model";
-import {CreateProblemDTO, UpdateProblemDTO} from "../dtos/problem.dto";
+import {CreateProblemDTO, UpdateProblemDTO} from "../validators/problem.validator";
 import {IProblemRepository} from "../repositories/problem.repository";
 import {BadRequestError, NotFoundError} from "../utils/errors/app.error";
 import {sanitizeMarkdown} from "../utils/markdown.sanitizer";

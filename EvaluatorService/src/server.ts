@@ -9,7 +9,9 @@ import {
 import { attachCorrelationIdMiddleware } from './middlewares/correlation.middleware';
 import logger from './config/logger.config';
 import {startWorkers} from "./workers/evaluation.worker";
-import {pullAllImages} from "./utils/containers/pullimage.utils";
+import {pullAllImages} from "./utils/containers/pullimage.util";
+import {createNewDockerContainer} from "./utils/containers/createContainer.util";
+import {PYTHON_IMAGE} from "./utils/constants";
 
 const app = express();
 

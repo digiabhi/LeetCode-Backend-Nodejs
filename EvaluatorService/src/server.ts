@@ -10,8 +10,8 @@ import { attachCorrelationIdMiddleware } from './middlewares/correlation.middlew
 import logger from './config/logger.config';
 import {startWorkers} from "./workers/evaluation.worker";
 import {pullAllImages} from "./utils/containers/pullimage.util";
-import {createNewDockerContainer} from "./utils/containers/createContainer.util";
-import {PYTHON_IMAGE} from "./utils/constants";
+import {runCode} from "./utils/containers/codeRunner.util";
+import {CPP_IMAGE} from "./utils/constants";
 
 const app = express();
 
@@ -23,10 +23,30 @@ app.use('/api/v2', v2Router);
 app.use(appErrorHandler);
 app.use(genericErrorHandler);
 
+async function testCPPCode() {
+    const cppCode = `
+    #include <iostream>
+    using namespace std;
+    int main() {
+        cout << "Hello, World!";
+        return 0;
+    }
+    `;
+    await runCode({
+        code: cppCode,
+        language: 'cpp',
+        timeout: 10000,
+        imageName: CPP_IMAGE
+        }
+    )
+}
+
 app.listen(serverConfig.PORT, async () => {
   logger.info(`Server is running on http://localhost:${serverConfig.PORT}`);
   await startWorkers();
   logger.info('Workers started successfully');
   await pullAllImages();
   logger.info('Images pulled');
+  await testCPPCode();
 });
+

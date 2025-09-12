@@ -1,4 +1,4 @@
-import {ISubmission, SubmissionStatus} from "../models/submission.model";
+import {ISubmission, ISubmissionData, SubmissionStatus} from "../models/submission.model";
 import {ISubmissionRepository} from "../repositories/submission.repository";
 import {BadRequestError, NotFoundError} from "../utils/errors/app.error";
 import {getProblemById} from "../api/problem.api";
@@ -10,7 +10,7 @@ export interface ISubmissionService {
     getSubmissionById(id: string): Promise<ISubmission | null>;
     getSubmissionsByProblemId(problemId: string): Promise<ISubmission[]>;
     deleteSubmissionById(id: string): Promise<boolean>;
-    updateSubmissionStatus(id: string, status: SubmissionStatus): Promise<ISubmission | null>;
+    updateSubmissionStatus(id: string, status: SubmissionStatus, submissionData: ISubmissionData): Promise<ISubmission | null>;
 }
 
 export class SubmissionService implements ISubmissionService {
@@ -64,11 +64,11 @@ export class SubmissionService implements ISubmissionService {
         return result;
     }
 
-    async updateSubmissionStatus(id: string, status: SubmissionStatus): Promise<ISubmission | null> {
+    async updateSubmissionStatus(id: string, status: SubmissionStatus, submissionData: ISubmissionData): Promise<ISubmission | null> {
         const submission = await this.submissionRepository.findById(id);
         if (!submission) {
             throw new NotFoundError('Submission not found');
         }
-        return await this.submissionRepository.updateStatus(id, status);
+        return await this.submissionRepository.updateStatus(id, status, submissionData);
     }
 }

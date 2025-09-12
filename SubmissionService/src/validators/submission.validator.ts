@@ -12,7 +12,8 @@ export const createSubmissionSchema = z.object({
 export const updateSubmissionStatusSchema = z.object({
     status: z.nativeEnum(SubmissionStatus, {
         errorMap: () => ({message: "Status must be one of: 'pending', 'compiling', 'running', 'accepted', 'wrong_answer'"})
-    })
+    }),
+    submissionData: z.any()
 });
 
 export const submissionQuerySchema = z.object({

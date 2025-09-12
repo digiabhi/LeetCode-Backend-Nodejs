@@ -49,8 +49,8 @@ export class SubmissionController {
 
     updateSubmissionStatus = async (req: Request, res: Response) => {
         const {id} = req.params;
-        const {status} = req.body;
-        const submission = await this.submissionService.updateSubmissionStatus(id, status);
+        const {status, submissionData} = req.body;
+        const submission = await this.submissionService.updateSubmissionStatus(id, status, submissionData);
         res.status(200).json({
             success: true,
             message: 'Submission status updated successfully',

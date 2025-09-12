@@ -9,10 +9,11 @@ export interface RunCodeOptions {
     language: 'python' | 'cpp';
     timeout: number;
     imageName: string;
+    input: string
 }
 
 export async function runCode(options: RunCodeOptions){
-    const {code, language, timeout, imageName} = options;
+    const {code, language, timeout, imageName, input} = options;
 
     if(!allowListedLanguages.includes(language)){
         throw new InternalServerError(`Unsupported language: ${language}`);
@@ -20,34 +21,57 @@ export async function runCode(options: RunCodeOptions){
 
     const container = await createNewDockerContainer({
         imageName: imageName,
-        cmdExecutable: commands[language](code),
+        cmdExecutable: commands[language](code, input),
         memoryLimit: 1024 * 1024 * 1024,
     });
 
+    let isTimeLimitExceeded = false;
+
     const timeLimitExceededTimeout = setTimeout(async () => {
         console.log("Time limit exceeded, stopping container...");
+        isTimeLimitExceeded = true;
         container?.kill();
     }, timeout);
 
-    console.log("Container created successfully:", container?.id);
     await container?.start();
     const status = await container?.wait();
-    console.log("Container status:", status);
+
+    if(isTimeLimitExceeded){
+        await container?.remove();
+        return {
+            status: 'time_limit_exceeded',
+             output: 'Time limit exceeded'
+        }
+    }
 
     const logs = await container?.logs({
         stdout: true,
         stderr: true,
     });
 
-    console.log("Container logs:", logs?.toString());
+    const containerLogs = processLogs(logs);
+
 
     await container?.remove();
 
-    await clearTimeout(timeLimitExceededTimeout);
+    clearTimeout(timeLimitExceededTimeout);
 
     if(status?.StatusCode === 0){
-        console.log("Container exited successfully");
+        return {
+            status: 'success',
+            output: containerLogs,
+        }
     } else {
-        console.log("Container exited with error");
+        return {
+            status: 'failed',
+            output: containerLogs,
+        }
     }
+}
+
+function processLogs(logs: Buffer | undefined){
+    return logs?.toString('utf-8')
+        .replace(/\x00/g, '')
+        .replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '')
+        .trim();
 }

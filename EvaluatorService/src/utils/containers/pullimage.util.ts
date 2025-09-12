@@ -6,7 +6,10 @@ export async function pullImage(image: string) {
     const docker = new Docker();
     return new Promise((res, rej)=> {
         docker.pull(image, (err: Error, stream:NodeJS.ReadableStream) => {
-            if(err) return rej(err);
+            if(err) {
+                rej(err);
+                return;
+            }
             docker.modem.followProgress(stream, function onFinished(finalErr, output) {
                 if(finalErr) return rej(finalErr);
                 res(output);
